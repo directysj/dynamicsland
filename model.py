@@ -100,7 +100,7 @@ def get_committor(Tmatrix,indTargets,indSource,conv=1.e-3):
         q[indSource,0]=0.0
         q=np.matmul(Mt,q)
         dconv=np.sum(np.abs(qp-q))
-        sys.stdout.write('convergence: '+str(dconv)+'\n')
+        print('convergence: '+str(dconv)+'\n')
         qp=q.copy()
     q[indTargets,0]=1.0
     q[indSource,0]=0.0
@@ -181,3 +181,15 @@ def get_dmat(x1,x2=None): #adapted to python from Russell Fung matlab implementa
 		y = y + np.matlib.repmat( np.sum( np.power(x2,2), 0 ), nX1, 1 )
 		y = y - 2 * np.matmul(np.transpose(x1),x2)
 	return np.sqrt(y)
+
+def colorbar(mappable):
+    from mpl_toolkits.axes_grid1 import make_axes_locatable
+    #import matplotlib.pyplot as plt
+    last_axes = plt.gca()
+    ax = mappable.axes
+    fig = ax.figure
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
+    cbar = fig.colorbar(mappable, cax=cax)
+    plt.sca(last_axes)
+    return cbar
